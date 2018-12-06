@@ -148,4 +148,4 @@ class Multimethod(MultimethodBase):
 
     @when('@4.0')
     def diamond_inheritance(self):
-        return "should_not_be_reached"
+        return "should_not_be_reached by diamond inheritance test"
