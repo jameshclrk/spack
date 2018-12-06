@@ -102,9 +102,7 @@ class SpecMultiMethod(object):
         for condition, method in self.method_list:
             if spec.satisfies(condition):
                 return method
-        if self.default:
-            return self.default
-        return None
+        return self.default or None
 
     def __call__(self, package_self, *args, **kwargs):
         """Find the first method with a spec that matches the
@@ -197,13 +195,11 @@ class when(object):
        around this because of the way decorators work.
     """
 
-    def __init__(self, spec):
-        if spec is True:
-            self.spec = Spec()
-        elif spec is not False:
-            self.spec = Spec(spec)
+    def __init__(self, condition):
+        if isinstance(condition, bool):
+            self.spec = Spec() if condition else None
         else:
-            self.spec = None
+            self.spec = Spec(condition)
 
     def __call__(self, method):
         # Get the first definition of the method in the calling scope
